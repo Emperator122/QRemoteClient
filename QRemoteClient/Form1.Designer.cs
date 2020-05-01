@@ -38,6 +38,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.localIPCoboBox = new System.Windows.Forms.ComboBox();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.headerPB)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -72,6 +73,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.linkLabel1);
             this.groupBox1.Controls.Add(this.timeoutTextBox);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
@@ -87,7 +89,7 @@
             // 
             this.timeoutTextBox.Location = new System.Drawing.Point(135, 50);
             this.timeoutTextBox.Name = "timeoutTextBox";
-            this.timeoutTextBox.Size = new System.Drawing.Size(162, 20);
+            this.timeoutTextBox.Size = new System.Drawing.Size(175, 20);
             this.timeoutTextBox.TabIndex = 5;
             this.timeoutTextBox.Text = "0";
             // 
@@ -114,7 +116,7 @@
             this.localIPCoboBox.FormattingEnabled = true;
             this.localIPCoboBox.Location = new System.Drawing.Point(135, 22);
             this.localIPCoboBox.Name = "localIPCoboBox";
-            this.localIPCoboBox.Size = new System.Drawing.Size(162, 21);
+            this.localIPCoboBox.Size = new System.Drawing.Size(175, 21);
             this.localIPCoboBox.TabIndex = 2;
             // 
             // notifyIcon1
@@ -122,6 +124,20 @@
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Text = "QRemoteClient";
             this.notifyIcon1.Click += new System.EventHandler(this.NotifyIcon1_Click);
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.linkLabel1.LinkColor = System.Drawing.Color.DimGray;
+            this.linkLabel1.Location = new System.Drawing.Point(115, 25);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(18, 13);
+            this.linkLabel1.TabIndex = 6;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "[x]";
+            this.linkLabel1.VisitedLinkColor = System.Drawing.Color.DimGray;
+            this.linkLabel1.Click += new System.EventHandler(this.LinkLabel1_Click);
             // 
             // Form1
             // 
@@ -152,6 +168,7 @@
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.TextBox timeoutTextBox;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 
