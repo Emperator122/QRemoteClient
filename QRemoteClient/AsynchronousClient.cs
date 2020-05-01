@@ -41,15 +41,15 @@ namespace QRemoteClient
         private Image response;
         private bool job;
         StateObject state = new StateObject();
-        public async void StartClient(PictureBox pb, string serverIP, int serverPort = 11000 ,int updateTimeout = 0)
+        public async void StartClient(PictureBox pb, int quality, string serverIP, int serverPort = 11000 ,int updateTimeout = 0)
         {
             pb.SizeMode = PictureBoxSizeMode.StretchImage;
            
             var progress = new Progress<Image>(img => {  pb.Image = img; pb.Update(); });
             await Task.Factory.StartNew<bool>(
-                () => this.StartClient(progress, serverIP, serverPort, updateTimeout), TaskCreationOptions.LongRunning);
+                () => this.StartClient(progress, quality, serverIP, serverPort, updateTimeout), TaskCreationOptions.LongRunning);
         }
-        private bool StartClient(IProgress<Image> progress, string serverIP, int serverPort, int updateTimeout)
+        private bool StartClient(IProgress<Image> progress, int quality, string serverIP, int serverPort, int updateTimeout)
         {
             // Connect to a remote device.  
             try
@@ -72,7 +72,7 @@ namespace QRemoteClient
                     sendDone.Reset();
                     receiveDone.Reset();
                     //Console.WriteLine("Отправил на получение размера картинки");
-                    Send(client, "scrSize");
+                    Send(client, "scrSize="+quality);
                     sendDone.WaitOne();
                     //Console.WriteLine("Жду картинку");
                     ReceiveInt(client);

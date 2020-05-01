@@ -13,11 +13,11 @@ namespace QRemoteClient
     public partial class ScreenViewer : Form
     {
         public AsynchronousClient client;
-        public ScreenViewer(string serverip, int serverport = 11000, int updateTimeout = 0)
+        public ScreenViewer(int quality, string serverip, int serverport = 11000, int updateTimeout = 0)
         {
             InitializeComponent();
             client = new AsynchronousClient();
-            client.StartClient(screenPictureBox, serverip, serverport, updateTimeout);
+            client.StartClient(screenPictureBox, quality, serverip, serverport, updateTimeout);
         }
 
         private void DisconnectToolStripMenuItem_Click(object sender, EventArgs e)

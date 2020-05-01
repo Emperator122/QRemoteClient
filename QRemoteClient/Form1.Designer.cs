@@ -33,14 +33,17 @@
             this.startButton = new System.Windows.Forms.Button();
             this.headerPB = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.timeoutTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.localIPCoboBox = new System.Windows.Forms.ComboBox();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.qualityVal = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.headerPB)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.qualityVal)).BeginInit();
             this.SuspendLayout();
             // 
             // startButton
@@ -73,6 +76,8 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.qualityVal);
             this.groupBox1.Controls.Add(this.linkLabel1);
             this.groupBox1.Controls.Add(this.timeoutTextBox);
             this.groupBox1.Controls.Add(this.label2);
@@ -81,9 +86,23 @@
             this.groupBox1.Controls.Add(this.startButton);
             this.groupBox1.Location = new System.Drawing.Point(12, 87);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(423, 82);
+            this.groupBox1.Size = new System.Drawing.Size(423, 108);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.linkLabel1.LinkColor = System.Drawing.Color.DimGray;
+            this.linkLabel1.Location = new System.Drawing.Point(115, 25);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(18, 13);
+            this.linkLabel1.TabIndex = 6;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "[x]";
+            this.linkLabel1.VisitedLinkColor = System.Drawing.Color.DimGray;
+            this.linkLabel1.Click += new System.EventHandler(this.LinkLabel1_Click);
             // 
             // timeoutTextBox
             // 
@@ -125,25 +144,32 @@
             this.notifyIcon1.Text = "QRemoteClient";
             this.notifyIcon1.Click += new System.EventHandler(this.NotifyIcon1_Click);
             // 
-            // linkLabel1
+            // qualityVal
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.linkLabel1.LinkColor = System.Drawing.Color.DimGray;
-            this.linkLabel1.Location = new System.Drawing.Point(115, 25);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(18, 13);
-            this.linkLabel1.TabIndex = 6;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "[x]";
-            this.linkLabel1.VisitedLinkColor = System.Drawing.Color.DimGray;
-            this.linkLabel1.Click += new System.EventHandler(this.LinkLabel1_Click);
+            this.qualityVal.Location = new System.Drawing.Point(135, 76);
+            this.qualityVal.Name = "qualityVal";
+            this.qualityVal.Size = new System.Drawing.Size(175, 20);
+            this.qualityVal.TabIndex = 7;
+            this.qualityVal.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(22, 78);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(93, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Качество (0-100):";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(447, 174);
+            this.ClientSize = new System.Drawing.Size(447, 200);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.headerPB);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -155,6 +181,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.headerPB)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.qualityVal)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -169,6 +196,8 @@
         private System.Windows.Forms.TextBox timeoutTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Label label3;
+        public System.Windows.Forms.NumericUpDown qualityVal;
     }
 }
 

@@ -52,7 +52,7 @@ namespace QRemoteClient
             string ip = temp[0];
             int port = Convert.ToInt32(temp[1]);
             int timeout = Convert.ToInt32(timeoutTextBox.Text);
-            ScreenViewers.Add(new ScreenViewer(ip, port, timeout));
+            ScreenViewers.Add(new ScreenViewer((int)qualityVal.Value,ip, port, timeout));
             ScreenViewers[ScreenViewers.Count - 1].Show();
         }
 
