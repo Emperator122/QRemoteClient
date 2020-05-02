@@ -12,11 +12,11 @@ namespace QRemoteClient
 {
     public partial class ScreenViewer : Form
     {
-        public AsynchronousClient client;
+        public SynchronousClient client;
         public ScreenViewer(int quality, string serverip, int serverport = 11000, int updateTimeout = 0)
         {
             InitializeComponent();
-            client = new AsynchronousClient();
+            client = new SynchronousClient();
             client.StartClient(screenPictureBox, quality, serverip, serverport, updateTimeout);
         }
 

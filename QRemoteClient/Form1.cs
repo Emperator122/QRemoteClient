@@ -23,7 +23,7 @@ namespace QRemoteClient
             InitializeComponent();
             headerPB.Width = this.Width;
             headerPB.Left = 0;
-            headerPB.Top = 0;
+            headerPB.Top = menuStrip1.Height;
             headerPB.BackColor = Color.FromArgb(39, 150, 214);
 
             // Получение информации из конфига
@@ -31,7 +31,10 @@ namespace QRemoteClient
 
             // Запись серверов в комбобокс
             localIPCoboBox.Items.Clear();
-            localIPCoboBox.Items.AddRange(cfg.Servers.ToArray());
+            ComboBoxRow[] rows = new ComboBoxRow[cfg.Servers.Count];
+            for (int i = 0; i < rows.Length; i++)
+                rows[i] = new ComboBoxRow(cfg.Servers[i]);
+            localIPCoboBox.Items.AddRange(rows);
             if (localIPCoboBox.Items.Count > 0)
                 localIPCoboBox.Text = localIPCoboBox.Items[localIPCoboBox.Items.Count - 1].ToString();
 
@@ -41,11 +44,18 @@ namespace QRemoteClient
         {
             // Работа со списком серверов
             string tmp = localIPCoboBox.Text;
-            localIPCoboBox.Items.Remove(tmp);
-            localIPCoboBox.Items.Add(tmp);
+            int index = cfg.Servers.IndexOf(tmp);
             cfg.Servers.Remove(tmp);
             cfg.Servers.Add(tmp);
-            localIPCoboBox.Text = localIPCoboBox.Items[localIPCoboBox.Items.Count - 1].ToString();
+            ComboBoxRow item = new ComboBoxRow(tmp);
+            if(index != -1)
+            {
+                item = (ComboBoxRow)localIPCoboBox.Items[index];
+                localIPCoboBox.Items.RemoveAt(index);
+            }
+            localIPCoboBox.Items.Add(item);
+            if (localIPCoboBox.Items.Count > 0)
+                localIPCoboBox.Text = localIPCoboBox.Items[localIPCoboBox.Items.Count - 1].ToString();
             ConfigManager.SaveConfigData(cfg);
             // Запуск клиента
             string[] temp = localIPCoboBox.Text.Split(':');
@@ -68,10 +78,7 @@ namespace QRemoteClient
 
         private void NotifyIcon1_Click(object sender, EventArgs e)
         {
-            // Разворачивание формы при клике на иконку в трее
-            this.Show();
-            this.WindowState = FormWindowState.Normal;
-            notifyIcon1.Visible = false;
+
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -89,6 +96,8 @@ namespace QRemoteClient
             else
                 if (AutorunManager.isAppOnAutorun())
                 AutorunManager.SetAutorunValue(false);
+
+            CheckServers();
         }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -98,7 +107,56 @@ namespace QRemoteClient
                     ScreenView.client.StopClient();
         }
 
-        private void LinkLabel1_Click(object sender, EventArgs e)
+        private async void CheckServers()
+        {
+            UpdateServersStripMenuItem.Enabled = false;
+            ComboBoxRow[] rows = new ComboBoxRow[localIPCoboBox.Items.Count];
+            localIPCoboBox.Items.CopyTo(rows, 0);
+            foreach (ComboBoxRow item in rows)
+            { 
+                string[] temp = item.ToString().Split(':');
+                item.isAvailable = await Task.Factory.StartNew<bool>(
+                    () => SynchronousClient.CheckServer(temp[0], Convert.ToInt32(temp[1])), TaskCreationOptions.LongRunning);
+
+            }
+            UpdateServersStripMenuItem.Enabled = true;
+        }
+
+
+        private void LocalIPCoboBox_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            ComboBoxRow item = (ComboBoxRow)localIPCoboBox.Items[e.Index];
+            e.DrawBackground();
+            Brush b = Brushes.Black;
+            if (item.isAvailable)
+                b = Brushes.ForestGreen;
+            e.Graphics.DrawString(item.ToString(), e.Font, b, e.Bounds);
+        }
+
+
+        private void ToolStripExitButton1_Click(object sender, EventArgs e)
+        {
+            Form1_FormClosing(sender, new FormClosingEventArgs(CloseReason.UserClosing, false));
+            Application.Exit();
+        }
+
+        private void ToolStripRestoreButton_Click(object sender, EventArgs e)
+        {
+            NotifyIcon1_MouseClick(sender, new MouseEventArgs(MouseButtons.Left,0,0,0,0));
+        }
+
+        private void NotifyIcon1_MouseClick(object sender, MouseEventArgs e)
+        {
+            // Разворачивание формы при клике на иконку в трее
+            if (e.Button == MouseButtons.Left)
+            {
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
+                notifyIcon1.Visible = false;
+            }
+        }
+
+        private void RemoveIPStripMenuItem_Click(object sender, EventArgs e)
         {
             int ind = localIPCoboBox.SelectedIndex;
             if (ind != -1)
@@ -108,6 +166,35 @@ namespace QRemoteClient
                 localIPCoboBox.SelectedIndex = -1;
                 ConfigManager.SaveConfigData(cfg);
             }
+        }
+
+        private void UpdateServersStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CheckServers();
+        }
+
+        private void StartButton1_MouseEnter(object sender, EventArgs e)
+        {
+            startButton1.Cursor = Cursors.Hand;
+        }
+
+        private void StartButton1_MouseLeave(object sender, EventArgs e)
+        {
+            startButton1.Cursor = Cursors.Default;
+        }
+    }
+
+    class ComboBoxRow
+    {
+        public string value;
+        public bool isAvailable = false;
+        public override string ToString()
+        {
+            return value;
+        }
+        public ComboBoxRow(string value)
+        {
+            this.value = value;
         }
     }
 }
