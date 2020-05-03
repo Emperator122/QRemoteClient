@@ -31,29 +31,27 @@ namespace QRemoteClient
 
             // Запись серверов в комбобокс
             localIPCoboBox.Items.Clear();
-            ComboBoxRow[] rows = new ComboBoxRow[cfg.Servers.Count];
-            for (int i = 0; i < rows.Length; i++)
-                rows[i] = new ComboBoxRow(cfg.Servers[i]);
-            localIPCoboBox.Items.AddRange(rows);
+            foreach (var server in cfg.Servers)
+                server.isAvailable = false;
+            localIPCoboBox.Items.AddRange(cfg.Servers.ToArray());
             if (localIPCoboBox.Items.Count > 0)
                 localIPCoboBox.Text = localIPCoboBox.Items[localIPCoboBox.Items.Count - 1].ToString();
-
         }
 
         private void StartButton_Click(object sender, EventArgs e)
         {
             // Работа со списком серверов
             string tmp = localIPCoboBox.Text;
-            int index = cfg.Servers.IndexOf(tmp);
-            cfg.Servers.Remove(tmp);
-            cfg.Servers.Add(tmp);
+            int index = cfg.FindIP(tmp);
             ComboBoxRow item = new ComboBoxRow(tmp);
             if(index != -1)
             {
                 item = (ComboBoxRow)localIPCoboBox.Items[index];
                 localIPCoboBox.Items.RemoveAt(index);
+                cfg.Servers.RemoveAt(index);
             }
             localIPCoboBox.Items.Add(item);
+            cfg.Servers.Add(item);
             if (localIPCoboBox.Items.Count > 0)
                 localIPCoboBox.Text = localIPCoboBox.Items[localIPCoboBox.Items.Count - 1].ToString();
             ConfigManager.SaveConfigData(cfg);
@@ -105,6 +103,7 @@ namespace QRemoteClient
             foreach (var ScreenView in ScreenViewers)
                 if(!ScreenView.IsDisposed)
                     ScreenView.client.StopClient();
+            ConfigManager.SaveConfigData(cfg);
         }
 
         private async void CheckServers()
@@ -130,7 +129,8 @@ namespace QRemoteClient
             Brush b = Brushes.Black;
             if (item.isAvailable)
                 b = Brushes.ForestGreen;
-            e.Graphics.DrawString(item.ToString(), e.Font, b, e.Bounds);
+            e.Graphics.DrawString(item.Name != "" ? item.Name + " || " + item.IP 
+                : item.IP , e.Font, b, e.Bounds);
         }
 
 
@@ -182,19 +182,48 @@ namespace QRemoteClient
         {
             startButton1.Cursor = Cursors.Default;
         }
+
+        private void ServerNameTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            int ind = localIPCoboBox.SelectedIndex;
+            if (ind != -1)
+            {
+                ((ComboBoxRow)localIPCoboBox.Items[ind]).Name = ServerNameTextBox1.Text;
+                cfg.Servers[ind].Name = ServerNameTextBox1.Text;
+            }
+        }
+
+        private void LocalIPCoboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (localIPCoboBox.SelectedIndex != -1)
+            {
+                ServerNameTextBox1.Text = ((ComboBoxRow)localIPCoboBox.SelectedItem).Name;
+                ServerNameTextBox1.Enabled = true;
+            }
+            else
+            {
+                ServerNameTextBox1.Text = "Серв не в списке";
+                ServerNameTextBox1.Enabled = false;
+            }
+        }
     }
 
-    class ComboBoxRow
+    public class ComboBoxRow
     {
-        public string value;
+        public string IP;
+        public string Name = "";
         public bool isAvailable = false;
         public override string ToString()
         {
-            return value;
+            return IP;
         }
-        public ComboBoxRow(string value)
+        public ComboBoxRow(string ip)
         {
-            this.value = value;
+            IP = ip;
+        }
+        public ComboBoxRow()
+        {
+
         }
     }
 }

@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.headerPB = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.startButton1 = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.qualityVal = new System.Windows.Forms.NumericUpDown();
             this.timeoutTextBox = new System.Windows.Forms.TextBox();
@@ -44,15 +45,17 @@
             this.toolStripExitButton1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.RemoveIPStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UpdateServersStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.startButton1 = new System.Windows.Forms.PictureBox();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.SetNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ServerNameTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.RemoveIPStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.headerPB)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.startButton1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.qualityVal)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.startButton1)).BeginInit();
             this.SuspendLayout();
             // 
             // headerPB
@@ -85,6 +88,19 @@
             this.groupBox1.Size = new System.Drawing.Size(444, 108);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
+            // 
+            // startButton1
+            // 
+            this.startButton1.Image = ((System.Drawing.Image)(resources.GetObject("startButton1.Image")));
+            this.startButton1.Location = new System.Drawing.Point(336, 8);
+            this.startButton1.Name = "startButton1";
+            this.startButton1.Size = new System.Drawing.Size(96, 96);
+            this.startButton1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.startButton1.TabIndex = 9;
+            this.startButton1.TabStop = false;
+            this.startButton1.Click += new System.EventHandler(this.StartButton_Click);
+            this.startButton1.MouseEnter += new System.EventHandler(this.StartButton1_MouseEnter);
+            this.startButton1.MouseLeave += new System.EventHandler(this.StartButton1_MouseLeave);
             // 
             // label3
             // 
@@ -142,6 +158,7 @@
             this.localIPCoboBox.Size = new System.Drawing.Size(175, 21);
             this.localIPCoboBox.TabIndex = 2;
             this.localIPCoboBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.LocalIPCoboBox_DrawItem);
+            this.localIPCoboBox.SelectedIndexChanged += new System.EventHandler(this.LocalIPCoboBox_SelectedIndexChanged);
             // 
             // notifyIcon1
             // 
@@ -186,18 +203,11 @@
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.RemoveIPStripMenuItem,
-            this.UpdateServersStripMenuItem});
+            this.UpdateServersStripMenuItem,
+            this.toolStripMenuItem2});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(68, 20);
             this.toolStripMenuItem1.Text = "Функции";
-            // 
-            // RemoveIPStripMenuItem
-            // 
-            this.RemoveIPStripMenuItem.Name = "RemoveIPStripMenuItem";
-            this.RemoveIPStripMenuItem.Size = new System.Drawing.Size(230, 22);
-            this.RemoveIPStripMenuItem.Text = "Удалить выбранный IP";
-            this.RemoveIPStripMenuItem.Click += new System.EventHandler(this.RemoveIPStripMenuItem_Click);
             // 
             // UpdateServersStripMenuItem
             // 
@@ -206,18 +216,36 @@
             this.UpdateServersStripMenuItem.Text = "Проверить список серверов";
             this.UpdateServersStripMenuItem.Click += new System.EventHandler(this.UpdateServersStripMenuItem_Click);
             // 
-            // startButton1
+            // toolStripMenuItem2
             // 
-            this.startButton1.Image = ((System.Drawing.Image)(resources.GetObject("startButton1.Image")));
-            this.startButton1.Location = new System.Drawing.Point(336, 8);
-            this.startButton1.Name = "startButton1";
-            this.startButton1.Size = new System.Drawing.Size(96, 96);
-            this.startButton1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.startButton1.TabIndex = 9;
-            this.startButton1.TabStop = false;
-            this.startButton1.Click += new System.EventHandler(this.StartButton_Click);
-            this.startButton1.MouseEnter += new System.EventHandler(this.StartButton1_MouseEnter);
-            this.startButton1.MouseLeave += new System.EventHandler(this.StartButton1_MouseLeave);
+            this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SetNameToolStripMenuItem,
+            this.RemoveIPStripMenuItem});
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(230, 22);
+            this.toolStripMenuItem2.Text = "Выбранный сервер";
+            // 
+            // SetNameToolStripMenuItem
+            // 
+            this.SetNameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ServerNameTextBox1});
+            this.SetNameToolStripMenuItem.Name = "SetNameToolStripMenuItem";
+            this.SetNameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.SetNameToolStripMenuItem.Text = "Задать имя";
+            // 
+            // ServerNameTextBox1
+            // 
+            this.ServerNameTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.ServerNameTextBox1.Name = "ServerNameTextBox1";
+            this.ServerNameTextBox1.Size = new System.Drawing.Size(100, 23);
+            this.ServerNameTextBox1.TextChanged += new System.EventHandler(this.ServerNameTextBox1_TextChanged);
+            // 
+            // RemoveIPStripMenuItem
+            // 
+            this.RemoveIPStripMenuItem.Name = "RemoveIPStripMenuItem";
+            this.RemoveIPStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.RemoveIPStripMenuItem.Text = "Удалить";
+            this.RemoveIPStripMenuItem.Click += new System.EventHandler(this.RemoveIPStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -237,11 +265,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.headerPB)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.startButton1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.qualityVal)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.startButton1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -262,9 +290,12 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripExitButton1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem RemoveIPStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem UpdateServersStripMenuItem;
         private System.Windows.Forms.PictureBox startButton1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem SetNameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox ServerNameTextBox1;
+        private System.Windows.Forms.ToolStripMenuItem RemoveIPStripMenuItem;
     }
 }
 

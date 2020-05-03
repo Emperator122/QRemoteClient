@@ -33,7 +33,7 @@ namespace QRemoteClient
             {
                 settings = new ConfigData();
                 settings.AutoRun = true;
-                settings.Servers = new List<string>();
+                settings.Servers = new List<ComboBoxRow>();
                 try
                 {
                     SaveConfigData(settings);
@@ -62,6 +62,13 @@ namespace QRemoteClient
     public class ConfigData
     {
         public bool AutoRun;
-        public List<string> Servers;
+        public List<ComboBoxRow> Servers;
+        public int FindIP(string ip)
+        {
+            for (int i = 0; i < Servers.Count; i++)
+                if (Servers[i].IP == ip)
+                    return i;
+            return -1;
+        }
     }
 }
