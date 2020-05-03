@@ -158,7 +158,6 @@
             this.localIPCoboBox.Size = new System.Drawing.Size(175, 21);
             this.localIPCoboBox.TabIndex = 2;
             this.localIPCoboBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.LocalIPCoboBox_DrawItem);
-            this.localIPCoboBox.SelectedIndexChanged += new System.EventHandler(this.LocalIPCoboBox_SelectedIndexChanged);
             // 
             // notifyIcon1
             // 
@@ -208,6 +207,7 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(68, 20);
             this.toolStripMenuItem1.Text = "Функции";
+            this.toolStripMenuItem1.DropDownOpened += new System.EventHandler(this.ToolStripMenuItem1_DropDownOpened);
             // 
             // UpdateServersStripMenuItem
             // 
@@ -230,7 +230,7 @@
             this.SetNameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ServerNameTextBox1});
             this.SetNameToolStripMenuItem.Name = "SetNameToolStripMenuItem";
-            this.SetNameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.SetNameToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.SetNameToolStripMenuItem.Text = "Задать имя";
             // 
             // ServerNameTextBox1
@@ -243,7 +243,7 @@
             // RemoveIPStripMenuItem
             // 
             this.RemoveIPStripMenuItem.Name = "RemoveIPStripMenuItem";
-            this.RemoveIPStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.RemoveIPStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.RemoveIPStripMenuItem.Text = "Удалить";
             this.RemoveIPStripMenuItem.Click += new System.EventHandler(this.RemoveIPStripMenuItem_Click);
             // 

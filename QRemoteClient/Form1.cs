@@ -185,7 +185,7 @@ namespace QRemoteClient
 
         private void ServerNameTextBox1_TextChanged(object sender, EventArgs e)
         {
-            int ind = localIPCoboBox.SelectedIndex;
+            int ind = cfg.FindIP(localIPCoboBox.Text);
             if (ind != -1)
             {
                 ((ComboBoxRow)localIPCoboBox.Items[ind]).Name = ServerNameTextBox1.Text;
@@ -193,11 +193,12 @@ namespace QRemoteClient
             }
         }
 
-        private void LocalIPCoboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void ToolStripMenuItem1_DropDownOpened(object sender, EventArgs e)
         {
-            if (localIPCoboBox.SelectedIndex != -1)
+            int ind = cfg.FindIP(localIPCoboBox.Text);
+            if (ind != -1)
             {
-                ServerNameTextBox1.Text = ((ComboBoxRow)localIPCoboBox.SelectedItem).Name;
+                ServerNameTextBox1.Text = cfg.Servers[ind].Name;
                 ServerNameTextBox1.Enabled = true;
             }
             else
