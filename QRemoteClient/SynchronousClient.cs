@@ -208,12 +208,12 @@ namespace QRemoteClient
 
         public static bool CheckServer(string serverIP, int serverPort)
         {
-            IPAddress ipAddress = IPAddress.Parse(serverIP);
-            IPEndPoint remoteEP = new IPEndPoint(ipAddress, serverPort);
-            using(Socket client = new Socket(ipAddress.AddressFamily,
-                SocketType.Stream, ProtocolType.Tcp))
+            try
             {
-                try
+                IPAddress ipAddress = IPAddress.Parse(serverIP);
+                IPEndPoint remoteEP = new IPEndPoint(ipAddress, serverPort);
+                using (Socket client = new Socket(ipAddress.AddressFamily,
+                SocketType.Stream, ProtocolType.Tcp))
                 {
                     client.Connect(remoteEP);
                     byte[] msg = Encoding.ASCII.GetBytes("qhi");
@@ -230,12 +230,13 @@ namespace QRemoteClient
                         return true;
                     }
                     return false;
-                }
-                catch
-                {
-                    return false;
-                }
+
                 
+                }
+            }
+                catch
+            {
+                return false;
             }
         }
     }
